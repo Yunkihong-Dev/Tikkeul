@@ -17,11 +17,11 @@ public class UserVO {
     private String status;
     private String roll;
     private String createDate;
+    private String registeredType;
     private String profileImageName;
     private Long profileImageSize;
     private String profileImageUuid;
     private String profileImagePath;
-    private String registeredType;
     private Long levelId;
 
 }

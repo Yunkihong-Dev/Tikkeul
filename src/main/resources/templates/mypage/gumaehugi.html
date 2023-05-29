@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -7,10 +7,13 @@
 
     <title>Document</title>
     <link rel="stylesheet" href="/css/mypage/jumoon.css">
+    <link rel="stylesheet" href="/css/mypage/cancelmodal.css">
 </head>
 
 <body class="vsc-initialized" style="overflow: auto">
-<div id="page-container">
+
+
+<div id="page-container" th:object="${hugi}">
     <main id="main-app">
         <div class="web-header">
             <div class="web-header-large">
@@ -23,7 +26,7 @@
                         <div class="OrderDetailPage_cardInfoArea__m9xa0">
                             <div class="PurchaseDetailHeaderCard_item__2Ki-i PurchaseDetailHeaderCard_normal__3VSo7">
                                 <div class="PurchaseDetailHeaderCard_etcArea__2kh9o">
-                                    <span>주문번호 230511-051850-0001</span><span>2023-05-11 05:19 구매</span>
+                                    <span>주문번호</span><span th:text="*{ok}"> 230511-051850-0001</span><span th:text="*{deliveryStartDate}"></span><span> 구매</span>
                                 </div>
                             </div>
                         </div>
@@ -33,9 +36,12 @@
                             <div class="LabelValueListContainer_container__3xnyC">
                                 <div class="OrderCard_container__sICKL">
                                     <div class="OrderCard_content__3TN63">
-                                        <span class="OrderCard_title__SVEo-">포스트바이오틱스 1박스 1개월분(30캡슐)</span><span
-                                            class="OrderCard_option__2tR0h">1개</span
-                                    ><span class="OrderCard_price__2XsK_">9,900원</span>
+                                        <span class="OrderCard_title__SVEo-" th:text="*{name}"></span>
+
+                                        <span
+                                            class="OrderCard_option__2tR0h" th:text="*{orderAmount}">
+                                        </span
+                                    ><span class="OrderCard_price__2XsK_" th:text="*{price}"></span>
                                     </div>
                                     <div class="OrderCard_thumbnailPlaceholder__JWTqc">
                                         <div class="OrderCard_thumbnail__3LNsT" style="
@@ -46,30 +52,59 @@
                             </div>
                         </div>
 
+                        <form th:action="@{/mypage/huhu}" method="post" th:object="${reviewVO}">
+
+                            <div class="ReactModalPortal" style="display: none;">
+                                <div class="ReactModal__Overlay ReactModal__Overlay--after-open ConfirmModal_overlay__9xcDs waffle__modal__overlay" style="background-color: rgba(0, 0, 0, 0.2)">
+                                    <div class="ReactModal__Content ReactModal__Content--after-open ConfirmModal_confirmModal__1x2Tw ConfirmModal_sizeLg__KHkYl" tabindex="-1" role="dialog" aria-modal="true">
+                                        <div class="ConfirmModal_header__gkXhb">
+                                            <div title="후기를 작성하시겠어요?" class="ConfirmModal_title__ubaBW">
+                                                후기를 작성하시겠어요?
+                                            </div>
+                                        </div>
+                                        <div class="ConfirmModal_content__3KM88 ConfirmModal_hasTitle__3rvSc">
+                                            <div class="ConfirmModal_message__Mi2Ur"></div>
+                                        </div>
+                                        <div class="ConfirmModal_footer__gfGBl">
+                                            <div class="ConfirmModal_buttonGroup__3YCl5">
+                                                <button class="mclose Button_button__2FuOU Button_text__2-UCU Button_md__46Ai- ConfirmModal_negativeButton__3VxAF" type="button">
+                                                    <span><span class="Button_children__ilFun">닫기</span></span></button>
+                                                <button class="Button_button__2FuOU Button_primary__2mZni Button_text__2-UCU Button_md__46Ai- ConfirmModal_positiveButton__Fafi9" type="submit">
+                                                    <span><span class="Button_children__ilFun">작성</span></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         <div style="margin-top: 20px;">
                             <h3>후기 작성</h3>
 
                             <div class="form-field text required request_description">
                                 <label id="request_description_label" for="request_description">구매후기를 알려주세요.</label>
-                                <textarea name="request[description]" id="request_description" aria-required="true"
+                                <textarea name="request[description]" class="kdkd" id="request_description" aria-required="true"
                                           aria-describedby="request_description_hint"
-                                          aria-labelledby="request_description_label">
-                </textarea><input type="hidden" name="request[description_mimetype]" id="request_description_mimetype"
+                                          aria-labelledby="request_description_label"
+                                          th:field="*{content}"
+                                          style="background-color: #f9fafb;
+    padding: 11px;"
+                                >
+                                </textarea>
+                                <input type="hidden" name="request[description_mimetype]" id="request_description_mimetype"
                                   value="text/plain" style="display: none" autocomplete="off"/>
 
                                 <p style="margin-top: 10px" id="request_description_hint">구매하신제품의 후기를 편하게 작성해주세요.
                                 </p>
                             </div>
-
-
                         </div>
-
+                        </form>
 
                         <div style="margin-top: 70px;">
                             <div class="OrderDetailPage_buttonArea__3FU0C">
                                 <div class="OrderDetailPageButton_buttonContainer__2Lla4">
                                     <button
-                                            class="Button_button__2FuOU Button_tertiaryGrey__3jJV7 Button_contained__2SIAT Button_lg__1Dftp OrderDetailPageButton_button__3IIXz"
+                                            class="jumooncancel Button_button__2FuOU Button_tertiaryGrey__3jJV7 Button_contained__2SIAT Button_lg__1Dftp OrderDetailPageButton_button__3IIXz"
                                             type="button">
                                         <span><span class="Button_children__ilFun">제출</span></span>
                                     </button>
@@ -160,4 +195,25 @@
 
 <input type="hidden" id="gaUserId" value="4536674"/>
 </body>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+
+    //취소모달
+
+    $(".jumooncancel").on("click", function()
+    {
+        $("div.ReactModalPortal").css("display", "block");
+        $("div.ReactModalPortal").css("animation", "popUp 0.5s");
+        $(".babo").text($(".kdkd").val());
+        console.log($(".babo"));
+    });
+
+    $(".mclose").on("click", function()
+    {
+        $("div.ReactModal__Overlay").css("animation", "popDown 0.5s");
+        $("div.ReactModalPortal").fadeOut(500);
+    });
+
+
+</script>
 </html>
