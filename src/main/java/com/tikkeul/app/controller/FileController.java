@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/files/*")@Slf4j
+@RequestMapping("/files/*")
+@Slf4j
 public class FileController {
     //    파일 업로드
     @PostMapping("upload")
@@ -48,8 +49,7 @@ public class FileController {
     @GetMapping("display")
     @ResponseBody
     public byte[] display(String fileName) throws IOException{
-        log.info(fileName);
-        return FileCopyUtils.copyToByteArray(new File("/Users/hi/Desktop/images/", fileName));
+        return FileCopyUtils.copyToByteArray(new File("C:/upload/", fileName));
     }
 
 }
